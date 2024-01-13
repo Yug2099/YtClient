@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import { FaEdit, FaUpload } from "react-icons/fa";
 import { useSelector } from "react-redux";
 import "./DescribeChannel.css";
+import "./EditChannel";
 function DecribeChannel({ setEditCreateChannelBtn, Cid,setVidUploadPage }) {
   const channels = useSelector((state) => state?.channelReducers);
 
@@ -9,6 +10,11 @@ function DecribeChannel({ setEditCreateChannelBtn, Cid,setVidUploadPage }) {
   const currentChannel = channels.filter((c) => c._id === Cid)[0];
 
   const CurrentUser = useSelector((state) => state?.currentUserReducer);
+
+  const [EditChannelBtn, setEditChannelBtn] = useState(false);
+  {EditChannelBtn && (
+    <EditChannel onclick={ () => {setEditChannelBtn=(true)}} />
+  )}
 
   return (
     <div className="container3_channel">

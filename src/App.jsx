@@ -42,16 +42,16 @@ function App() {
   };
   const [vidUploadPage, setVidUploadPage] = useState(false);
   const [EditCreateChannelBtn, setEditCreateChannelBtn] = useState(false);
+  // {EditCreateChannelBtn && (
+  //   <CreateEditChannel setEditCreateChannelBtn={setEditCreateChannelBtn} />
+  // )}
   
   return (
     <Router>
       {vidUploadPage && <VideoUpload  setVidUploadPage={setVidUploadPage}/>}
       
-      {EditCreateChannelBtn && (
-        <CreateEditChannel setEditCreateChannelBtn={setEditCreateChannelBtn} />
-      )}
 
-      {/* {EditCreateChannelBtn && <CreateEditChannel setEditCreateChannelBtn={setEditCreateChannelBtn}/>} */}
+      {EditCreateChannelBtn && <CreateEditChannel setEditCreateChannelBtn={setEditCreateChannelBtn}/>}
 
       <Navbar
         setEditCreateChannelBtn={setEditCreateChannelBtn}
