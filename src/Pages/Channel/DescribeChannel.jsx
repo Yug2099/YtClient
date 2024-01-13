@@ -12,9 +12,9 @@ function DecribeChannel({ setEditCreateChannelBtn, Cid,setVidUploadPage }) {
   const CurrentUser = useSelector((state) => state?.currentUserReducer);
 
   const [EditChannelBtn, setEditChannelBtn] = useState(false);
-  {EditChannelBtn && (
-    <EditChannel onclick={ () => {setEditChannelBtn=(true)}} />
-  )}
+  {EditChannelBtn && 
+    <EditChannelBtn onclick={ () => {setEditChannelBtn=(true)}} />
+  }
 
   return (
     <div className="container3_channel">
@@ -30,7 +30,7 @@ function DecribeChannel({ setEditCreateChannelBtn, Cid,setVidUploadPage }) {
           <p
             className="editbtn_channel"
             onClick={() => {
-              setEditCreateChannelBtn(true);
+              setEditChannelBtn(true);
             }}
           >
             <FaEdit />
