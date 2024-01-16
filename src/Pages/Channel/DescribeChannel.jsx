@@ -1,20 +1,14 @@
 import React, { useState } from "react";
 import { FaEdit, FaUpload } from "react-icons/fa";
 import { useSelector } from "react-redux";
+import CreateEditChannel from "./CreateEditChannel";
 import "./DescribeChannel.css";
-import "./EditChannel";
-function DecribeChannel({ setEditCreateChannelBtn, Cid,setVidUploadPage }) {
+function DecribeChannel({ Cid, setVidUploadPage }) {
   const channels = useSelector((state) => state?.channelReducers);
-
-  // console.log(Cid)
   const currentChannel = channels.filter((c) => c._id === Cid)[0];
-
   const CurrentUser = useSelector((state) => state?.currentUserReducer);
 
-  const [EditChannelBtn, setEditChannelBtn] = useState(false);
-  {EditChannelBtn && 
-    <EditChannelBtn onclick={ () => {setEditChannelBtn=(true)}} />
-  }
+  const [showEditForm, setShowEditForm] = useState(false);
 
   return (
     <div className="container3_channel">
@@ -30,17 +24,23 @@ function DecribeChannel({ setEditCreateChannelBtn, Cid,setVidUploadPage }) {
           <p
             className="editbtn_channel"
             onClick={() => {
-              setEditChannelBtn(true);
+              setShowEditForm(true);
             }}
           >
             <FaEdit />
             <b> Edit Channel</b>
           </p>
-          <p className="uploadbtn_channel" onClick={()=>setVidUploadPage(true)}>
+          <p className="uploadbtn_channel" onClick={() => setVidUploadPage(true)}>
             <FaUpload />
             <b> Upload Video</b>
           </p>
         </>
+      )}
+      {showEditForm && (
+        <CreateEditChannel
+          setEditCreateChannelBtn={setShowEditForm}
+          channel={currentChannel} // Pass the current channel details to the form
+        />
       )}
     </div>
   );
