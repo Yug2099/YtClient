@@ -11,7 +11,9 @@
     background-color: rgba(55,57,67,0.293);
     display: flex;
     flex-direction: column;
-    position: relative;
+    position:absolute;
+    top: -100px;
+    left: 600px;
     width: 20rem;
     height: 30rem;
     padding: 0.8rem;

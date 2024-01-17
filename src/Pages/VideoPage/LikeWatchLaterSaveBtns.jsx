@@ -37,8 +37,15 @@ function LikeWatchLaterSaveBtns({ vv, vid }) {
     if (likedVideoList?.data && Array.isArray(likedVideoList.data)) {
       likedVideoList.data
         .filter((q) => q?.videoId === vid && q?.Viewer === CurrentUser?.result._id)
-        .map((m) => setLikeBtn(true));}
-    watchLaterList?.data.filter((q) => q?.videoId === vid && q?.Viewer === CurrentUser?.result._id).map((m) => setSAveVideo(true));
+        .map((m) => setLikeBtn(true));
+    }
+    // watchLaterList?.data.filter((q) => q?.videoId === vid && q?.Viewer === CurrentUser?.result._id).map((m) => setSAveVideo(true));
+    if (watchLaterList?.data && Array.isArray(watchLaterList.data)) {
+      watchLaterList.data
+        .filter((q) => q?.videoId === vid && q?.Viewer === CurrentUser?.result._id)
+        .map((m) => setLikeBtn(true));
+    }
+
   }, [CurrentUser?.result._id, likedVideoList?.data, vid, watchLaterList?.data]);
 
   const toggleSavedVideo = () => {
