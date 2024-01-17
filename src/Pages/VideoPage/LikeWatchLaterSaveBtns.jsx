@@ -30,20 +30,15 @@ function LikeWatchLaterSaveBtns({ vv, vid }) {
   const [LikeBtn, setLikeBtn] = useState(false);
 
   const likedVideoList = useSelector((state) => state.likedVideoReducer);
-
+  console.log(likedVideoList);
   const watchLaterList = useSelector(state => state.watchLaterReducer)
 
   useEffect(() => {
-    likedVideoList?.data
-      .filter(
-        (q) => q?.videoId === vid && q?.Viewer === CurrentUser?.result._id
-      )
-      .map((m) => setLikeBtn(true));
-    watchLaterList?.data
-      .filter(
-        (q) => q?.videoId === vid && q?.Viewer === CurrentUser?.result._id
-      )
-      .map((m) => setSAveVideo(true));
+    if (likedVideoList?.data && Array.isArray(likedVideoList.data)) {
+      likedVideoList.data
+        .filter((q) => q?.videoId === vid && q?.Viewer === CurrentUser?.result._id)
+        .map((m) => setLikeBtn(true));}
+    watchLaterList?.data.filter((q) => q?.videoId === vid && q?.Viewer === CurrentUser?.result._id).map((m) => setSAveVideo(true));
   }, [CurrentUser?.result._id, likedVideoList?.data, vid, watchLaterList?.data]);
 
   const toggleSavedVideo = () => {
