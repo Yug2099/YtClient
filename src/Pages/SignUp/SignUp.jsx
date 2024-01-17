@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import { GoogleLogin } from "react-google-login";
 import { BiUserCircle } from "react-icons/bi";
-import { Link } from "react-router-dom";
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from "react-router-dom";
 import axios from 'axios';
 import "./SignUp.css";
 
@@ -33,7 +32,7 @@ const SignUp = () => {
       // Log the sign-up data in the console
       console.log("Sign up data:", signUpData);
 
-      // Assuming your server endpoint for user creation is '/api/user/create'
+      // Assuming your server endpoint for user creation is '/api/user/signup'
       const response = await axios.post('http://localhost:5500/api/user/signup', signUpData);
 
       // Log the response from the server
@@ -42,13 +41,16 @@ const SignUp = () => {
       // Assuming your sign-up logic is successful, redirect to the sign-in page
       navigate('/signin');
     } catch (error) {
-      console.error('Error during signup:', error.message);
+      console.error('Error during signup:', error.response.data);
+
+      // Display more detailed error message to the user
+      alert(`Signup failed: ${error.response.data.details}`);
     }
   };
 
   const handleInputChange = (e) => {
     setSignUpData({ ...signUpData, [e.target.name]: e.target.value });
-    // Clear password error when user types
+    // Clear password error when the user types
     setPasswordError("");
   };
 
