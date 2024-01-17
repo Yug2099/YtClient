@@ -20,7 +20,7 @@ const dispatch=useDispatch()
       <LeftSidebar />
       <div className="container2_Pages_App">
         <p className="conatiner_whl">
-          <div className="box_WHL leftside_whl">
+          <div className="box_WHL">
             <b>Your {page} Shown Here </b>
             {
               page==="History"&&
@@ -28,7 +28,7 @@ const dispatch=useDispatch()
             }
           </div>
           <div className="rightSide_whl">
-            <h1>{page}</h1>
+            {/* <h1>{page}</h1> */}
             <div className="whl_list">
               <WHLVideoList page={page} 
               CurrentUser={CurrentUser?.result._id}

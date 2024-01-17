@@ -1,28 +1,39 @@
-import React from 'react'
-import ShowVideoList from '../ShowvideoList/ShowVideoList'
+import React from 'react';
+import ShowVideoList from '../ShowvideoList/ShowVideoList';
 
-function WHLVideoList({ page, CurrentUser,videoList }) {
-  // console.log(videoList)
+function WHLVideoList({ page, CurrentUser, videoList }) {
+  const uniqueVideos = getUniqueVideos(videoList);
+
   return (
     <>
-     { CurrentUser ?(<>
-     {
-              videoList?.data?.filter(q=>q?.Viewer === CurrentUser).reverse().map(m=>{
-                return(
-                    <>
-                    <ShowVideoList videoId={m?.videoId} key={m?._id}/>
-                    </>
-    
-                )
-            })
-     }
-      </>) :(<> 
-      <h2 style={{color:"white"}}>Plz Login To Watch Your {page} </h2>
-      </>)
-
-     }
+      {CurrentUser ? (
+        <>
+          {uniqueVideos.map((entry) => (
+            <ShowVideoList videoId={entry?.videoId} key={entry?._id} />
+          ))}
+        </>
+      ) : (
+        <>
+          <h2 style={{ color: 'white' }}>Please Login To Watch Your {page}</h2>
+        </>
+      )}
     </>
-  )
+  );
 }
 
-export default WHLVideoList
+// Helper function to get unique video list based on videoId
+const getUniqueVideos = (videoList) => {
+  const uniqueVideos = [];
+  const videoIds = new Set();
+
+  for (const entry of videoList?.data?.reverse() || []) {
+    if (!videoIds.has(entry?.videoId)) {
+      videoIds.add(entry?.videoId);
+      uniqueVideos.push(entry);
+    }
+  }
+
+  return uniqueVideos;
+};
+
+export default WHLVideoList;

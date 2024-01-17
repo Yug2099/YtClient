@@ -21,6 +21,8 @@
     cursor: pointer;
     font-weight: bold;
     margin: auto 0;
+    position: absolute;
+    right: 80px;
   }
   .clear_History_btn:hover {
     color: white;
