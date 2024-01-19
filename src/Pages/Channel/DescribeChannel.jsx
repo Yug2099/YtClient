@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import { FaEdit, FaUpload } from "react-icons/fa";
 import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";  // Import Link
 import CreateEditChannel from "./CreateEditChannel";
 import "./DescribeChannel.css";
-function DecribeChannel({ Cid, setVidUploadPage }) {
+
+function DescribeChannel({ Cid, setVidUploadPage }) {
   const channels = useSelector((state) => state?.channelReducers);
   const currentChannel = channels.filter((c) => c._id === Cid)[0];
   const CurrentUser = useSelector((state) => state?.currentUserReducer);
@@ -34,6 +36,9 @@ function DecribeChannel({ Cid, setVidUploadPage }) {
             <FaUpload />
             <b> Upload Video</b>
           </p>
+          <Link to="/dashboard" className="video_det">
+            <b>Video Details</b>
+          </Link>
         </>
       )}
       {showEditForm && (
@@ -46,4 +51,4 @@ function DecribeChannel({ Cid, setVidUploadPage }) {
   );
 }
 
-export default DecribeChannel;
+export default DescribeChannel;

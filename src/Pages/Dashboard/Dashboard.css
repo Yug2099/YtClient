@@ -1,0 +1,31 @@
+.dashboard-container {
+    text-align: center;
+    padding: 20px;
+  }
+  
+  .dashboard-header {
+    margin-bottom: 20px;
+  }
+  
+  .videos-list-container {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .video-item {
+    display: flex;
+    align-items: center;
+    border: 1px solid #ddd;
+    margin: 5px 0;
+    padding: 5px;
+  }
+  
+  .heading-row {
+    font-weight: bold;
+  }
+  
+  .video-item p {
+    flex: 1;
+    text-align: center;
+  }
+  

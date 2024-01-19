@@ -6,6 +6,12 @@
     z-index: 100;
     display: flex;
 }
+.container_CreateEditChannel .ibtn_x
+{
+    position: absolute;
+    right: 300px;
+    top: -200px;
+}
 .container2_CreateEditChannel{
     margin: auto;
     background-color: rgba(55,57,67,0.293);

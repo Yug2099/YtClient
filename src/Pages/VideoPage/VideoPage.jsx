@@ -3,24 +3,16 @@ import { Link, useParams } from "react-router-dom";
 import Comments from "../../Components/Comments/Comments";
 import { useDispatch, useSelector } from "react-redux";
 import moment from "moment";
-// import vid from "../../Components/Video/vid.mp4";
 import LikeWatchLaterSaveBtns from "./LikeWatchLaterSaveBtns";
 import "./VideoPage.css";
 import { addToHistory } from "../../actions/History";
 import { viewVideo } from "../../actions/video";
+
 function VideoPage() {
   const { vid } = useParams();
-  // console.log(vid)
-
-  // const chanels = useSelector((state) => state?.chanelReducers);
-
-  // console.log(Cid)
-  // const currentChanel = chanels.filter((c) => c._id === vid)[0];
-
-  const vids = useSelector((state) => state.videoReducer);
-  // console.log(vids)
-  const vv = vids?.data.filter((q) => q._id === vid)[0];
   const dispatch = useDispatch();
+  const vids = useSelector((state) => state.videoReducer);
+  const vv = vids?.data.filter((q) => q._id === vid)[0];
   const CurrentUser = useSelector((state) => state?.currentUserReducer);
 
   const handleHistory = useCallback(() => {
@@ -41,19 +33,18 @@ function VideoPage() {
       handleHistory();
     }
     handleViews();
-  }, [CurrentUser, handleHistory, handleViews]);
-  
-  const [subscribeBtn, setsubscribeBtn] = useState('Subscribe');
-  // const [loginMessage, setLoginMessage] = useState('');
+  }, [CurrentUser, handleHistory, handleViews, vid]);
+
+  const [subscribeBtn, setSubscribeBtn] = useState('Subscribe');
   const [loginMessageVisible, setLoginMessageVisible] = useState(false);
 
   const handleSubscribeClick = () => {
     if (CurrentUser) {
-      setsubscribeBtn('Subscribed');
-      setLoginMessageVisible(false); // Hide the login message
+      setSubscribeBtn('Subscribed');
+      setLoginMessageVisible(false);
     } else {
-      setsubscribeBtn('Subscribe');
-      setLoginMessageVisible(!loginMessageVisible); // Toggle the login message visibility
+      setSubscribeBtn('Subscribe');
+      setLoginMessageVisible(!loginMessageVisible);
     }
   }
 
@@ -63,15 +54,13 @@ function VideoPage() {
         <div className="container2_videoPage">
           <div className="video_display_screen_videoPage">
             <video
-              // src={`http://localhost:5500/${vv?.filePath}`}
               src={`http://localhost:5500/${vv?.filePath}`}
               className={"video_ShowVideo_videoPage"}
               controls
-            // autoPlay
             ></video>
             <div className="video_details_videoPage">
               <div className="video_btns_title_VideoPage_cont">
-                <p className="video_title_VideoPage"> {vv?.videoTitle}</p>
+                <p className="video_title_VideoPage">{vv?.videoTitle}</p>
                 <div className="views_date_btns_VideoPage">
                   <div className="views_videoPage">
                     {vv?.Views} views <div className="dot"></div>{" "}
@@ -109,9 +98,13 @@ function VideoPage() {
               </div>
               <div className="comments_VideoPage">
                 <h2>
-                  <u>Coments</u>
+                  <u>Comments</u>
                 </h2>
-                <Comments videoId={vv._id} />
+                {vv ? (
+                  <Comments videoId={vv._id} />
+                ) : (
+                  <p>Loading comments...</p>
+                )}
               </div>
             </div>
           </div>

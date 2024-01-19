@@ -44,8 +44,9 @@ import VideoPage from "../Pages/VideoPage/VideoPage";
 import Channel from "../Pages/Channel/Channel";
 import Subscriptions from "..//Pages/Subscriptions/Subscriptions";
 import Search from "../Pages/Search/Search";
-import SignIn from "../Pages/SignIn/SignIn"
-import SignUp from "../Pages/SignUp/SignUp"
+import SignIn from "../Pages/SignIn/SignIn";
+import SignUp from "../Pages/SignUp/SignUp";
+import Dashboard from "../Pages/Dashboard/Dashboard";
 function AllRoutes({ setEditCreateChanelBtn,setVidUploadPage }) {
   return (
     <Routes>
@@ -60,6 +61,7 @@ function AllRoutes({ setEditCreateChanelBtn,setVidUploadPage }) {
       <Route path="/seacrh/:searchQuery" element={<Search />} />
       <Route path="/signin" element={<SignIn />} />
       <Route path="/signup" element={<SignUp />} />
+      <Route path="/dashboard" element={<Dashboard />} />
       <Route
         path="/channel/:Cid"
         element={<Channel 
