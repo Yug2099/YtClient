@@ -1,31 +1,42 @@
+/* Updated Dashboard CSS */
 .dashboard-container {
-    text-align: center;
-    padding: 20px;
-  }
-  
-  .dashboard-header {
-    margin-bottom: 20px;
-  }
-  
-  .videos-list-container {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .video-item {
-    display: flex;
-    align-items: center;
-    border: 1px solid #ddd;
-    margin: 5px 0;
-    padding: 5px;
-  }
-  
-  .heading-row {
-    font-weight: bold;
-  }
-  
-  .video-item p {
-    flex: 1;
-    text-align: center;
-  }
-  
+  text-align: center;
+  padding: 20px;
+}
+
+.dashboard-header {
+  margin-bottom: 20px;
+}
+
+.videos-list-container {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+.video-item {
+  display: table-row;
+  border: 1px solid #ddd;
+  margin: 5px 0;
+}
+
+.heading-row {
+  font-weight: bold;
+}
+
+.video-item td {
+  padding: 8px;
+  text-align: center;
+}
+
+.video-item td:first-child {
+  text-align: left;
+}
+
+.video-item input {
+  margin-right: 5px;
+}
+
+.video-item.selected {
+  background-color: #e6e6e6; /* Add your preferred darker shade color here */
+}

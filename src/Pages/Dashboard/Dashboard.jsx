@@ -1,4 +1,5 @@
-import React, { useEffect } from 'react';
+// Updated Dashboard Component
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllVideo } from '../../actions/video';
 import { getAllComment } from '../../actions/comments';
@@ -32,8 +33,27 @@ function Dashboard() {
     return videoComments ? videoComments.length : 0;
   };
 
-  // Main headings
-  const headings = ['Video', 'Visibility', 'Date', 'Views', 'Comments', 'Likes'];
+  const [selectedVideos, setSelectedVideos] = useState([]);
+
+  const handleSelectVideo = (videoId) => {
+    setSelectedVideos((prevSelected) => {
+      if (prevSelected.includes(videoId)) {
+        return prevSelected.filter((id) => id !== videoId);
+      } else {
+        return [...prevSelected, videoId];
+      }
+    });
+  };
+
+  const handleSelectAll = () => {
+    setSelectedVideos((prevSelected) => {
+      if (prevSelected.length === videosWithFormattedDate.length) {
+        return [];
+      } else {
+        return videosWithFormattedDate.map((video) => video._id);
+      }
+    });
+  };
 
   return (
     <div className="dashboard-container">
@@ -42,26 +62,40 @@ function Dashboard() {
         <h3>Channel Content</h3>
       </header>
 
-      <div className="videos-list-container">
-        {/* Main headings row */}
-        <div className="video-item heading-row">
-          {headings.map((heading, index) => (
-            <p key={index}>{heading}</p>
+      <table className="videos-list-container">
+        <thead>
+          <tr className="video-item heading-row">
+            <th>
+              <input type="checkbox" checked={selectedVideos.length === videosWithFormattedDate.length} onChange={handleSelectAll} />
+            </th>
+            <th>Video</th>
+            <th>Visibility</th>
+            <th>Date</th>
+            <th>Views</th>
+            <th>Comments</th>
+            <th>Likes</th>
+          </tr>
+        </thead>
+        <tbody>
+          {videosWithFormattedDate?.map((video, index) => (
+            <tr key={index} className={`video-item ${selectedVideos.includes(video._id) ? 'selected' : ''}`}>
+              <td>
+                <input
+                  type="checkbox"
+                  checked={selectedVideos.includes(video._id)}
+                  onChange={() => handleSelectVideo(video._id)}
+                />
+              </td>
+              <td>{video.videoTitle}</td>
+              <td>{video.visibility}</td>
+              <td>{video.formattedDate}</td>
+              <td>{video.Views}</td>
+              <td>{commentsCount(video._id)}</td>
+              <td>{video.Like}</td>
+            </tr>
           ))}
-        </div>
-
-        {/* Video data rows */}
-        {videosWithFormattedDate?.map((video, index) => (
-          <div key={index} className="video-item">
-            <p>{video.videoTitle}</p>
-            <p>{video.visibility}</p>
-            <p>{video.formattedDate}</p>
-            <p>{video.Views}</p>
-            <p>{commentsCount(video._id)}</p>
-            <p>{video.Like}</p>
-          </div>
-        ))}
-      </div>
+        </tbody>
+      </table>
     </div>
   );
 }
