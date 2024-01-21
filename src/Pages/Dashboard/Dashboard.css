@@ -1,4 +1,3 @@
-/* Updated Dashboard CSS */
 .dashboard-container {
   text-align: center;
   padding: 20px;
@@ -18,6 +17,11 @@
   display: table-row;
   border: 1px solid #ddd;
   margin: 5px 0;
+  transition: background-color 0.3s ease; /* Add transition for smooth color change */
+}
+
+.video-item:hover {
+  background-color: #e6e6e6; /* Darker shade color on hover */
 }
 
 .heading-row {
@@ -39,4 +43,9 @@
 
 .video-item.selected {
   background-color: #e6e6e6; /* Add your preferred darker shade color here */
+}
+
+/* Exclude heading from hover effect */
+.video-item.heading-row:hover {
+  background-color: transparent;
 }

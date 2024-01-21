@@ -4,11 +4,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getAllVideo } from '../../actions/video';
 import { getAllComment } from '../../actions/comments';
 import moment from 'moment';
+import { deleteVideo } from '../../actions/video';
 import './Dashboard.css';
 
 function Dashboard() {
   const dispatch = useDispatch();
   const videoData = useSelector((state) => state.videoReducer.data);
+  console.log('Video data:', videoData);
   const commentData = useSelector((state) => state.commentReducer.data);
 
   useEffect(() => {
@@ -55,6 +57,14 @@ function Dashboard() {
     });
   };
 
+  const handleDeleteVideo = async (videoId) => {
+    // Dispatch an action to delete the video
+    await dispatch(deleteVideo(videoId));
+
+    // After deleting, refresh the video list
+    dispatch(getAllVideo());
+  };
+
   return (
     <div className="dashboard-container">
       <header className="dashboard-header">
@@ -92,6 +102,11 @@ function Dashboard() {
               <td>{video.Views}</td>
               <td>{commentsCount(video._id)}</td>
               <td>{video.Like}</td>
+              <td>
+                {selectedVideos.includes(video._id) && (
+                  <button onClick={() => handleDeleteVideo(video._id)}>Delete</button>
+                )}
+              </td>
             </tr>
           ))}
         </tbody>

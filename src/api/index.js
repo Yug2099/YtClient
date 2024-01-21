@@ -43,3 +43,11 @@ export const deleteComment = (id) => API.delete(`/comment/delete/${id}`)
 export const editComment = (id, commentBody) => API.patch(`/comment/edit/${id}`, { commentBody })
 export const getAllComment = () => API.get('/comment/get')
 export const signup = (signupData) => API.post("/user/signup", signupData);
+export const deleteVideo = async (videoId) => {
+  try {
+    await API.delete(`/video/${videoId}`);
+  } catch (error) {
+    console.error('Error deleting video:', error);
+    throw error; // Rethrow the error for the component to handle
+  }
+};
