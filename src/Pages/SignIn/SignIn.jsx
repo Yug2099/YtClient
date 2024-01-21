@@ -59,9 +59,9 @@ const SignIn = () => {
         <button type="submit">Sign In</button>
 
         {/* Sign Up Link */}
-        <p>
+        {/* <p>
           Don't have an account? <Link to="/signup">Sign Up</Link>
-        </p>
+        </p> */}
 
         {/* Google Login */}
         <GoogleLogin

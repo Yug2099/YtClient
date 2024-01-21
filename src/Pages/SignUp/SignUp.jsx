@@ -1,3 +1,4 @@
+// SignUp.js
 import React, { useState } from "react";
 import { GoogleLogin } from "react-google-login";
 import { BiUserCircle } from "react-icons/bi";
@@ -7,8 +8,14 @@ import "./SignUp.css";
 
 const SignUp = () => {
   const navigate = useNavigate();
-  const [signUpData, setSignUpData] = useState({ name: "", email: "", password: "", confirmPassword: "" });
+  const [signUpData, setSignUpData] = useState({
+    name: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+  });
   const [passwordError, setPasswordError] = useState("");
+  const [error, setError] = useState("");
 
   const onSuccessGoogle = (response) => {
     const googleEmail = response?.profileObj.email;
@@ -29,29 +36,25 @@ const SignUp = () => {
     }
 
     try {
-      // Log the sign-up data in the console
-      console.log("Sign up data:", signUpData);
-
-      // Assuming your server endpoint for user creation is '/api/user/signup'
+      // Send the signupData to the server
       const response = await axios.post('http://localhost:5500/api/user/signup', signUpData);
+      
+      // Display the server response details in an alert
+      const userDetailsAlert = response.data.userDetailsAlert;
+      alert(userDetailsAlert);
 
-      // Log the response from the server
-      console.log('Server response:', response.data);
-
-      // Assuming your sign-up logic is successful, redirect to the sign-in page
+      // Redirect to the signin page
       navigate('/signin');
     } catch (error) {
       console.error('Error during signup:', error.response.data);
-
-      // Display more detailed error message to the user
-      alert(`Signup failed: ${error.response.data.details}`);
+      setError(error.response.data.details || "Signup failed");
     }
   };
 
   const handleInputChange = (e) => {
     setSignUpData({ ...signUpData, [e.target.name]: e.target.value });
-    // Clear password error when the user types
-    setPasswordError("");
+    setPasswordError(""); // Clear password error when the user types
+    setError(""); // Clear other errors when the user types
   };
 
   const handleConfirmPasswordBlur = () => {
@@ -66,22 +69,15 @@ const SignUp = () => {
   return (
     <div className="Form_Container">
       <form onSubmit={handleSignUp} className="SignUp_Form">
-        {/* Google Login */}
         {/* Sign-Up Form */}
-        {/* <label>Name</label> */}
         <input type="text" name="name" value={signUpData.name} onChange={handleInputChange} placeholder="Name" required /><br />
-
-        {/* <label>Email</label> */}
         <input type="email" name="email" value={signUpData.email} onChange={handleInputChange} placeholder="Email" required /><br />
-
-        {/* <label>Password</label> */}
         <input type="password" name="password" value={signUpData.password} onChange={handleInputChange} placeholder="Password" required /><br />
-
-        {/* <label>Confirm Password</label> */}
         <input type="password" name="confirmPassword" value={signUpData.confirmPassword} onChange={handleInputChange} onBlur={handleConfirmPasswordBlur} placeholder="Confirm Password" required /><br />
 
         {/* Display error message */}
         {passwordError && <p style={{ color: 'red' }}>{passwordError}</p>}
+        {error && <p style={{ color: 'red' }}>{error}</p>}
 
         <button type="submit">Sign Up</button>
 
