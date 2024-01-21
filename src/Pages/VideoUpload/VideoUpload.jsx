@@ -26,13 +26,13 @@ function VideoUpload({ setVidUploadPage }) {
       }
     },
   };
-  const uploadVideoFile = () => {
+  const uploadVideoFile = async () => {
     if (!title) {
       alert("Plz Enter A Title of the video");
     } else if (!videoFile) {
       alert("Plz Attach a video File");
     } else if (videoFile.size > 100000000) {
-      alert("Plz Attch video file less than 1kb");
+      alert("Plz Attach video file less than 1kb");
     } else {
       const fileData = new FormData();
       fileData.append("file", videoFile);
@@ -40,15 +40,23 @@ function VideoUpload({ setVidUploadPage }) {
       fileData.append("channel", CurrentUser?.result._id);
       fileData.append("Uploder", CurrentUser?.result.name);
       fileData.append("visibility", visibilityMode); // Adding visibility mode
-      console.log("Visibility Details: ", visibilityMode)
-      dispatch(
-        uploadVideo({
-          fileData: fileData,
-          fileOptions: fileOptions,
-        })
-      );
+  
+      console.log("FormData before dispatch: ", fileData); // Log before dispatch
+  
+      try {
+        // Dispatch the uploadVideo action
+        await dispatch(uploadVideo({ fileData, fileOptions }));
+  
+        // After the upload is complete, you can close the upload page
+        setVidUploadPage(false);
+      } catch (error) {
+        console.error("Error uploading video:", error);
+        // Handle the error as needed (e.g., show an error message)
+      }
     }
   };
+  
+  
 
   return (
     <div className="container_VidUpload">
