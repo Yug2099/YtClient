@@ -8,7 +8,7 @@ function VideoUpload({ setVidUploadPage }) {
   const dispatch = useDispatch();
   const [title, setTitle] = useState("");
   const [videoFile, setVideoFile] = useState("");
-
+  const [visibilityMode, setVisibilityMode] = useState("public"); // Default visibility mode
   const handleSetVideoFile = (e) => {
     setVideoFile(e.target.files[0]);
   };
@@ -21,7 +21,7 @@ function VideoUpload({ setVidUploadPage }) {
       const percentage = Math.floor(((loaded / 1000) * 100) / (total / 1000));
       setProgress(percentage);
       if (percentage === 100) {
-        setTimeout(function () {}, 3000);
+        setTimeout(function () { }, 3000);
         setVidUploadPage(false);
       }
     },
@@ -39,7 +39,8 @@ function VideoUpload({ setVidUploadPage }) {
       fileData.append("title", title);
       fileData.append("channel", CurrentUser?.result._id);
       fileData.append("Uploder", CurrentUser?.result.name);
-      console.log(videoFile)
+      fileData.append("visibility", visibilityMode); // Adding visibility mode
+      console.log("Visibility Details: ", visibilityMode)
       dispatch(
         uploadVideo({
           fileData: fileData,
@@ -88,6 +89,18 @@ function VideoUpload({ setVidUploadPage }) {
             value="Upload"
             className="ibox_vidupload btn_vidUpload"
           />
+          <label htmlFor="visibility" className="ibox_vidupload">
+            Visibility Mode:
+            <select
+              name="visibility"
+              onChange={(e) => setVisibilityMode(e.target.value)}
+              value={visibilityMode}
+            >
+              <option value="public">Public</option>
+              <option value="private">Private</option>
+              {/* Add more visibility options as needed */}
+            </select>
+          </label>
         </div>
         <div className="loader ibox_div_vidupload">
           <CircularProgressbar
